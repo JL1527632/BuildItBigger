@@ -9,6 +9,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.leon.example.javajokelibrary.Joke;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
@@ -16,7 +17,19 @@ import java.io.IOException;
 public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
 
     private static MyApi myApiService = null;
+    private final JokeListener mListener;
     private Context context;
+
+    //Interface to retrieve Joke by calling activity
+    interface JokeListener{
+        void onJokeRetrieved(String jokeString);
+    }
+
+    //Constructor with listener interface
+    public EndPointsAsyncTask(JokeListener jListener)
+    {
+        mListener = jListener;
+    }
 
 
     @Override
@@ -40,7 +53,7 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
         }
 
         context = params[0].first;
-        String name = params[0].second;
+        String name = Joke.getJoke();
 
         try {
             return myApiService.sayHi(name).execute().getData();
@@ -54,6 +67,7 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
     protected void onPostExecute(String result) {
         //TODO: Save result to String.
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        mListener.onJokeRetrieved(result);
     }
 }
 

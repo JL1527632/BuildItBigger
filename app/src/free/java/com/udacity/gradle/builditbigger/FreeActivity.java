@@ -14,6 +14,9 @@ import com.leon.example.javajokelibrary.Joke;
 
 public class FreeActivity extends AppCompatActivity {
 
+    EndPointsAsyncTask.JokeListener jokeListener;
+    String mJokeText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,8 @@ public class FreeActivity extends AppCompatActivity {
 
         /* EndPointsAsyncTask task = new EndPointsAsyncTask();
         task.execute(new Pair<Context, String>(this, "Manfred")); */
+
+//        jokeListener
 
     }
 
@@ -47,17 +52,23 @@ public class FreeActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-
         //Api call.
         //TODO: Update to not require second parameter.
-        EndPointsAsyncTask task = new EndPointsAsyncTask();
-        task.execute(new Pair<Context, String>(this, Joke.getJoke()));
+        //EndPointsAsyncTask task =
+                new EndPointsAsyncTask( new EndPointsAsyncTask.JokeListener() {
+            @Override
+            public void onJokeRetrieved(String jokeString) {
 
+                //Assign value to joke.
+                mJokeText = jokeString;
+                //CURRENTLY, opens activity without using ApiInterface.
+                Intent intentToOpen = new Intent(getBaseContext(), showJokeActivity.class);
+                intentToOpen.putExtra(Joke.getJokeExtra(), mJokeText);
 
-        //CURRENTLY, opens activity without using ApiInterface.
-        Intent intentToOpen = new Intent(this, showJokeActivity.class);
-        intentToOpen.putExtra(Joke.getJokeExtra(), Joke.getJoke());
+                startActivity(intentToOpen);
+            }
+        }).execute(new Pair<Context, String>(this, null));
 
-        startActivity(intentToOpen);
+        //task.execute(new Pair<Context, String>(this, null));
     }
 }
