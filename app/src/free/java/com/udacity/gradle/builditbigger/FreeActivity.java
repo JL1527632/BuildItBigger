@@ -1,12 +1,16 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.leon.example.andjokelib.showJokeActivity;
+import com.leon.example.javajokelibrary.Joke;
 
 public class FreeActivity extends AppCompatActivity {
 
@@ -47,13 +51,13 @@ public class FreeActivity extends AppCompatActivity {
         //Api call.
         //TODO: Update to not require second parameter.
         EndPointsAsyncTask task = new EndPointsAsyncTask();
-        task.execute(new Pair<Context, String>(this, "Peter"));
+        task.execute(new Pair<Context, String>(this, Joke.getJoke()));
 
 
         //CURRENTLY, opens activity without using ApiInterface.
-        /* Intent intentToOpen = new Intent(this, showJokeActivity.class);
+        Intent intentToOpen = new Intent(this, showJokeActivity.class);
         intentToOpen.putExtra(Joke.getJokeExtra(), Joke.getJoke());
 
-        startActivity(intentToOpen); */
+        startActivity(intentToOpen);
     }
 }
