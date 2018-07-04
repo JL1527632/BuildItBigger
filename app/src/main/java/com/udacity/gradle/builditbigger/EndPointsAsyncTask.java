@@ -18,6 +18,7 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
     private static MyApi myApiService = null;
     private Context context;
 
+
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         if (myApiService == null) {  // Only do this once
@@ -48,8 +49,10 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
         }
     }
 
+    //When tasks finishes, save Joke information.
     @Override
     protected void onPostExecute(String result) {
+        //TODO: Save result to String.
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
 }

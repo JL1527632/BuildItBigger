@@ -19,8 +19,8 @@ public class FreeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free);
 
-        EndPointsAsyncTask task = new EndPointsAsyncTask();
-        task.execute(new Pair<Context, String>(this, "Manfred"));
+        /* EndPointsAsyncTask task = new EndPointsAsyncTask();
+        task.execute(new Pair<Context, String>(this, "Manfred")); */
 
     }
 
@@ -47,8 +47,14 @@ public class FreeActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        //Toast.makeText(this, Joke.getJoke(), Toast.LENGTH_SHORT).show();
 
+        //Api call.
+        //TODO: Update to not require second parameter.
+        EndPointsAsyncTask task = new EndPointsAsyncTask();
+        task.execute(new Pair<Context, String>(this, Joke.getJoke()));
+
+
+        //CURRENTLY, opens activity without using ApiInterface.
         Intent intentToOpen = new Intent(this, showJokeActivity.class);
         intentToOpen.putExtra(Joke.getJokeExtra(), Joke.getJoke());
 
