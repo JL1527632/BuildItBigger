@@ -3,7 +3,6 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.util.Pair;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -65,8 +64,6 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
     //When tasks finishes, save Joke information.
     @Override
     protected void onPostExecute(String result) {
-        //TODO: Save result to String.
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         mListener.onJokeRetrieved(result);
     }
 }

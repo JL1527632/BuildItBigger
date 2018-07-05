@@ -14,13 +14,16 @@ import com.leon.example.javajokelibrary.Joke;
 
 public class PaidActivity extends AppCompatActivity {
 
+    EndPointsAsyncTask.JokeListener jokeListener;
+    String mJokeText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paid_activity);
 
-        EndPointsAsyncTask task = new EndPointsAsyncTask();
-        task.execute(new Pair<Context, String>(this, "Peter"));
+        /* EndPointsAsyncTask task = new EndPointsAsyncTask();
+        task.execute(new Pair<Context, String>(this, "")); */
     }
 
     @Override
@@ -46,11 +49,23 @@ public class PaidActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        //Toast.makeText(this, Joke.getJoke(), Toast.LENGTH_SHORT).show();
+        //Api call.
+        //TODO: Update to not require second parameter.
+        //EndPointsAsyncTask task =
+        new EndPointsAsyncTask( new EndPointsAsyncTask.JokeListener() {
+            @Override
+            public void onJokeRetrieved(String jokeString) {
 
-        Intent intentToOpen = new Intent(this, showJokeActivity.class);
-        intentToOpen.putExtra(Joke.getJokeExtra(), Joke.getJoke());
+                //Assign value to joke.
+                mJokeText = jokeString;
+                //CURRENTLY, opens activity without using ApiInterface.
+                Intent intentToOpen = new Intent(getBaseContext(), showJokeActivity.class);
+                intentToOpen.putExtra(Joke.getJokeExtra(), mJokeText);
 
-        startActivity(intentToOpen);
+                startActivity(intentToOpen);
+            }
+        }).execute(new Pair<Context, String>(this, null));
+
+        //task.execute(new Pair<Context, String>(this, null));
     }
 }
