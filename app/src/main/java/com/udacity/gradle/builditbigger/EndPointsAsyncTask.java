@@ -52,6 +52,7 @@ public class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
         }
 
         context = params[0].first;
+        //Obtain the Joke text from Joke class.
         String name = Joke.getJoke();
 
         try {

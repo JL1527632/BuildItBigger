@@ -14,16 +14,12 @@ import com.leon.example.javajokelibrary.Joke;
 
 public class PaidActivity extends AppCompatActivity {
 
-    EndPointsAsyncTask.JokeListener jokeListener;
     String mJokeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paid_activity);
-
-        /* EndPointsAsyncTask task = new EndPointsAsyncTask();
-        task.execute(new Pair<Context, String>(this, "")); */
     }
 
     @Override
@@ -50,8 +46,6 @@ public class PaidActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         //Api call.
-        //TODO: Update to not require second parameter.
-        //EndPointsAsyncTask task =
         new EndPointsAsyncTask( new EndPointsAsyncTask.JokeListener() {
             @Override
             public void onJokeRetrieved(String jokeString) {
@@ -66,6 +60,5 @@ public class PaidActivity extends AppCompatActivity {
             }
         }).execute(new Pair<Context, String>(this, null));
 
-        //task.execute(new Pair<Context, String>(this, null));
     }
 }
